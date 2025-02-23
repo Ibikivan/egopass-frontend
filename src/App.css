@@ -1,0 +1,33 @@
+
+#root {
+    background: #f7f9fc;
+}
+
+.login_header {
+    background: white;
+}
+
+.login_card_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.circled_button {
+    border-radius: 50%;
+}
+
+.small_loader {
+    display: flex !important;
+    align-items: center;
+    height: 22px !important;
+    width: 22px !important;
+}
+
+.ui_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.4em;
+}
