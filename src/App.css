@@ -31,3 +31,9 @@
     justify-content: center;
     gap: 1.4em;
 }
+
+.standard_card {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+}
