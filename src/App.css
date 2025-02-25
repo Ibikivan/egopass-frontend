@@ -3,8 +3,43 @@
     background: #f7f9fc;
 }
 
+.pointer {
+    cursor: pointer;
+}
+
+.fullHeight {
+    min-height: 100vh !important;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}  
+
 .login_header {
     background: white;
+    padding: 0 2em 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.login_header p {
+    margin-bottom: 0;
+    text-transform: capitalize;
+    font-weight: bold;
+    color: gray;
+}
+
+.online_status {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: solid 1px white;
+    left: 35px;
+    top: 35px;
 }
 
 .login_card_container {
@@ -30,4 +65,129 @@
     align-items: center;
     justify-content: center;
     gap: 1.4em;
+}
+
+.standard_card {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+}
+
+.full_page_spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.profile_picture {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.filter_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    padding: 1em 2em;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.agent_home {
+    padding: 2em 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2em;
+}
+
+.pass_container {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    width: 100%;
+    background: white;
+}
+
+.wild_profile_picture {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.blur_effect {
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.user_info_card {
+    width: 100%;
+    max-width: 400px;
+}
+
+.profil_container {
+    position: relative;
+}
+
+.profil_container a {
+    position: absolute;
+    left: 155px;
+    top: 155px;
+    background-color: #1B3843;
+    border-radius: 50%;
+    border: solid 2px white;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edti_profil_form {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 3em;
+}
+
+.edti_profil_form legend {
+    text-align: center;
+}
+
+.scan_code {
+    position: fixed;
+    bottom: 50px;
+    right: 70px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    box-shadow: 0 0 2px black;
+    background: #173540;
+    /* transition: all 0.3s ease-in-out; */
+}
+.add_post:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0 4px black;
+}
+
+.modal_cover {
+    background-color: rgba(0, 0, 0, 0.2);
 }
