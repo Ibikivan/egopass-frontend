@@ -47,3 +47,10 @@ export const getFreePassQrCode = async (passId) => {
     const response = await axiosInstance.get(`/egopass/get-free/${passId}`);
     return response.data;
 }
+
+export const updateProfile = async (profileData) => {
+    const response = await axiosInstance.patch('/users/update', profileData, {
+        "Content-Type": "multipart/form-data"
+    });
+    return response.data;
+}

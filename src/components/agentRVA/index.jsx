@@ -4,8 +4,9 @@ import Spinner from "../UI/Spinner"
 import EGoPassFilter from "./EGoPassFilter"
 import EGoPassCard from "./EGoPassCard"
 import { useEffect, useState } from "react"
+import QrCodeScanner from "../home/QrCodeScanner"
 
-export default function AgentRVA({ queryKey, getter, title }) {
+export default function AgentRVA({ queryKey, getter, title, footerRef }) {
 
     const [_disactivated, setDisactivated] = useState(true)
     const [_day, setDayd] = useState(false)
@@ -42,5 +43,7 @@ export default function AgentRVA({ queryKey, getter, title }) {
                 pass={pass}
             />)}
         </div>
+
+        <QrCodeScanner footerRef={footerRef} />
     </div>
 }

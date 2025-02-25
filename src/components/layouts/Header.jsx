@@ -13,7 +13,7 @@ export default function Header({ userInfo }) {
 
             <div className="hstack gap-2">
                 <p>{userName}</p>
-                <Link to={'profil'} className="position-relative">
+                <Link to={'profil'} title="Consulter mon profil" className="position-relative">
                     <img src={hostUriADapter(picture)} className="img-thumbnail profile_picture" alt={`${userName} profile picture`} />
                     <div className={`${isOnline ? 'bg-success' : 'bg-danger'} online_status`}></div>
                 </Link>

@@ -8,7 +8,7 @@ import Spinner from "../../components/UI/Spinner";
 import { useOnline } from "../../hooks/useOnline";
 import { useEffect } from "react";
 
-export default function Root() {
+export default function Root({ footerRef }) {
 
     const queryKey = ['user']
     const { isLoading, data: user, error } = useQuery(queryKey, async () => getLogedUser())
@@ -39,7 +39,7 @@ export default function Root() {
                 >
                     <Outlet />
                 </ErrorBoundary>
-            <Footer />
+            <Footer ref={footerRef} />
         </div>
     }
 }

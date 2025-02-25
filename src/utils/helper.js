@@ -33,3 +33,34 @@ export function getIdentifier(method, userData) {
 export function hostUriADapter(uri) {
     return new URL(uri, import.meta.env.VITE_API_URL);
 }
+
+/**
+ * Positionne l'élément relatif par rapport à l'élément référence, à la taille de la page et à la marge
+ * @param {HTMLElement} reference 
+ * @param {HTMLElement} relativeElement 
+ * @param {number} margin 
+ */
+export function handleScroll(reference, relativeElement, margin) {
+    const rect = reference.getBoundingClientRect()
+    const intersecting = rect.top < window.innerHeight
+    const movingY = rect.top - margin
+    const fixedY = window.innerHeight - margin
+
+    if (relativeElement) relativeElement.style.top = `${intersecting ? movingY: fixedY}px`
+}
+
+/**
+ * @param {SyntheticEvent} e 
+ */
+export const preventClickBehaviour = (e) => {
+    e.stopPropagation()
+}
+
+/**
+ * Passe le display de la modal à none après l'animation
+ * @param {boolean} isModalOpen 
+ * @param {RefObject} ref 
+ */
+export const handleAnimCoplete = (isModalOpen, ref) => {
+    if (!isModalOpen) ref.current.style.display = ''
+}

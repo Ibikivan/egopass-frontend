@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import AgentRVA from "../../components/agentRVA";
 import Abonne from "../../components/abonne";
 
-export default function Home() {
+export default function Home({ footerRef }) {
 
     const pageConfig = {
         roles: {
@@ -35,6 +35,7 @@ export default function Home() {
             queryKey={pageConfig.roles[userRole]?.key}
             getter={pageConfig.roles[userRole]?.getter}
             title={pageConfig.roles[userRole]?.title}
+            footerRef={footerRef}
         />}
         {userRole === 'ABONNE' && <Abonne
             queryKey={pageConfig.roles[userRole]?.key}
