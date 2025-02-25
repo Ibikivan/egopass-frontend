@@ -24,3 +24,26 @@ export const resetPasswordApi = async (newPasswordData) => {
     const response = await axiosInstance.post('/users/reset-password', newPasswordData);
     return response.data;
 }
+
+export const getLogedUser = async () => {
+    const response = await axiosInstance.get('/users/profil');
+    return response.data;
+}
+
+export const getEgoPasses = async (params) => {
+    const searchParams = new URLSearchParams(params)
+    const paramsString = searchParams.toString()
+
+    const response = await axiosInstance.get(`/egopass/get-all${paramsString ? `?${paramsString}` : ''}`)
+    return response.data;
+}
+
+export const getUserTravels = async () => {
+    const response = await axiosInstance.get('/users/travels');
+    return response.data;
+}
+
+export const getFreePassQrCode = async (passId) => {
+    const response = await axiosInstance.get(`/egopass/get-free/${passId}`);
+    return response.data;
+}

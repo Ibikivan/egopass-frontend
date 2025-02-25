@@ -1,5 +1,3 @@
-import { forwardRef } from "react";
-import { Link } from "react-router-dom";
 
 /**
  * A UI component for displaying a logo image with customizable dimensions and positioning
@@ -13,9 +11,9 @@ import { Link } from "react-router-dom";
  * @param {string} props.classList - Additional CSS classes to apply to the logo container
  * @returns {JSX.Element} A div containing the logo image with specified styling
  */
-export default forwardRef(function LogoUI({name, source, width, height, translate, classList}, ref) {
+export default function PassLoGo({name, source, width, height, translate, classList}) {
 
-    return <Link ref={ref} to={'/'} style={{width, height, overflow: 'hidden'}} className={classList}>
+    return <div style={{width, height, overflow: 'hidden'}} className={classList}>
         <img src={source} alt={`logo-${name}`} style={{width, height: 'auto', objectFit: 'cover', transform: `translateY(-${translate}px)`}} />
-    </Link>
-})
+    </div>
+}

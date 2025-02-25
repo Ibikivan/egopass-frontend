@@ -20,7 +20,7 @@ export default function Login() {
         onSuccess: (user) => {
             console.log(user)
             reset()
-            navigate('/', {state: user})
+            navigate('/')
         },
         onError: (err) => console.log(err)
     })

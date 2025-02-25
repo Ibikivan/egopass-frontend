@@ -26,7 +26,7 @@ function App() {
           element: <PassDetails />
         },
         {
-          path: '/profil',
+          path: 'profil',
           element: <Profil />
         },
         {
