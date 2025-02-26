@@ -2,6 +2,7 @@ import { forwardRef, useId, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { handleAnimCoplete, preventClickBehaviour } from "../../utils/helper";
+import ScanInterface from "./ScanInterface";
 
 const coverVariants = {
     visible: {opacity: 1},
@@ -34,10 +35,10 @@ export default forwardRef(function ScanCode({closeModal, isModalOpen}, ref) {
         <motion.div
             variants={bodyVariants}
             animate={isModalOpen ? 'visible' : 'hidden'}
-            className="modal-dialog"
+            className="modal-dialog modal_container"
             onClick={preventClickBehaviour}
         >
-            <div className="modal-content">
+            <div className="modal-content h-100">
                 <div className="modal-header">
                     <h5 className="modal-title">Scan du Qr-Code</h5>
                     <button
@@ -49,9 +50,17 @@ export default forwardRef(function ScanCode({closeModal, isModalOpen}, ref) {
                     ></button>
                 </div>
                 <div className="modal-body">
-                    <h1>Corps de la modal</h1>
+                    <ScanInterface
+                        onScan={(data) => {
+                            console.log("QR Code scanné :", data)
+                            closeModal()
+                        }}
+                        onError={(err) => {
+                            console.log("erreur de scan", err)
+                        }}
+                    />
                 </div>
-                <div className="modal-footer d-flex">
+                {/* <div className="modal-footer d-flex">
                     <button
                         type="button"
                         className="btn btn-secondary"
@@ -62,7 +71,7 @@ export default forwardRef(function ScanCode({closeModal, isModalOpen}, ref) {
                         type="submit" form={id}
                         className="btn btn-primary"
                     >Ajouter</button>
-                </div>
+                </div> */}
             </div>
         </motion.div>
     </motion.div>, document.body)
