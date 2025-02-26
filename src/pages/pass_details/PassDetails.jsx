@@ -1,15 +1,39 @@
-import { useQuery } from "react-query"
+import { useMutation, useQuery, useQueryClient } from "react-query"
 import Spinner from "../../components/UI/Spinner"
-import { getFreePassQrCode } from "../../utils/api/authAPIs"
+import { disactivateFreeCode, getFreePassQrCode } from "../../utils/api/authAPIs"
 import { useLocation } from "react-router-dom"
+import Button from "../../components/UI/Button"
 
 export default function EGoPassCard() {
 
     const location = useLocation()
     const passId = location.state.id
+    const isDeleteble = location.state?.token
     
+    const queryClient = useQueryClient()
+    const mutateKey = ['egoPasses, freePassQrCode']
     const queryKey = ['freePassQrCode']
     const { isLoading, data: pass, error } = useQuery(queryKey, async () => await getFreePassQrCode(passId))
+
+    const { isLoading: disactivating, mutate, reset } = useMutation(async (token) => await disactivateFreeCode(token), {
+        onSuccess: (mutatePass) => {
+            queryClient.setQueryData(mutateKey, (passLis) => {
+                try {
+                    const newList = passLis.filter(pass => pass.id === mutatePass.id)
+                    newList.unshift(mutatePass)
+                    return newList
+                } catch (error) {
+                    console.log('Erreur de mise à jour du cache: ', error)
+                }
+            })
+            reset()
+        },
+        onError: err => console.log(err)
+    })
+
+    const handleDisactivate = () => {
+        mutate(isDeleteble)
+    }
 
     if (isLoading) return <Spinner otherClass='m-auto' />
 
@@ -26,6 +50,8 @@ export default function EGoPassCard() {
                     <p className="card-text"><small className="text-body-secondary">Valeur: {pass.pass.amount} Fcfa</small></p>
                 </div>
             </div>
+
+            <Button content={'Déactiver'} type="button" onClick={handleDisactivate} isLoading={disactivating} />
         </div>
     }
 }

@@ -54,3 +54,13 @@ export const updateProfile = async (profileData) => {
     });
     return response.data;
 }
+
+export const scanQrCode = async (token) => {
+    const response = await axiosInstance.post('/egopass/authenticate', {passToken: token})
+    return response.data
+}
+
+export const disactivateFreeCode = async (token) => {
+    const response = await axiosInstance.post('/egopass/disactivate', {passToken: token})
+    return response.data
+}

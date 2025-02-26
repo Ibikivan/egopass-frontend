@@ -3,6 +3,9 @@ import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { handleAnimCoplete, preventClickBehaviour } from "../../utils/helper";
 import ScanInterface from "./ScanInterface";
+import { useMutation } from "react-query";
+import { scanQrCode } from "../../utils/api/authAPIs";
+import { useNavigate } from "react-router-dom";
 
 const coverVariants = {
     visible: {opacity: 1},
@@ -16,11 +19,24 @@ const bodyVariants = {
 
 export default forwardRef(function ScanCode({closeModal, isModalOpen}, ref) {
 
-    const id = useId()
-    const formRef = useRef(null)
+    const tokenRef = useRef(null)
+    const navigate = useNavigate()
+    const { isLoading, mutate, reset } = useMutation(async (token) => await scanQrCode(token), {
+        onSuccess: (pass) => {
+            navigate(`${pass.id}`, { state: { id: pass.id, token: tokenRef?.current } })
+            reset()
+        },
+        onError: err => console.log(err)
+    })
 
-    const handleCancled = () => {
-        closeModal()
+    const handleScan = (result) => {
+        const token = result[0].rawValue
+        tokenRef.current = token
+        mutate(token)
+    }
+
+    const handleError = (error) => {
+        console.log("erreur de scan", error)
     }
 
     return createPortal(<motion.div
@@ -50,28 +66,12 @@ export default forwardRef(function ScanCode({closeModal, isModalOpen}, ref) {
                     ></button>
                 </div>
                 <div className="modal-body">
-                    <ScanInterface
-                        onScan={(data) => {
-                            console.log("QR Code scanné :", data)
-                            closeModal()
-                        }}
-                        onError={(err) => {
-                            console.log("erreur de scan", err)
-                        }}
-                    />
+                    {isModalOpen && <ScanInterface
+                        onScan={handleScan}
+                        onError={handleError}
+                        isLoading={isLoading}
+                    />}
                 </div>
-                {/* <div className="modal-footer d-flex">
-                    <button
-                        type="button"
-                        className="btn btn-secondary"
-                        data-bs-dismiss="modal"
-                        onClick={handleCancled}
-                    >Annuler</button>
-                    <button
-                        type="submit" form={id}
-                        className="btn btn-primary"
-                    >Ajouter</button>
-                </div> */}
             </div>
         </motion.div>
     </motion.div>, document.body)

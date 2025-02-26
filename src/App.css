@@ -193,5 +193,11 @@ header {
 }
 
 .modal_container {
-    height: 70vh;
+    max-width: 400px;
+}
+
+.scan_spinner {
+    position: absolute;
+    top: 170px;
+    left: 170px;
 }
