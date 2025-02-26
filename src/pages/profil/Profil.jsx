@@ -4,6 +4,7 @@ import { usePageTitle } from "../../hooks"
 import { hostUriADapter } from "../../utils/helper"
 import { Link } from "react-router-dom"
 import editIcon from "../../assets/pencil-square.svg"
+import defaultPicture from '../../assets/defaultPicture.svg'
 
 export default function Profil() {
 
@@ -33,7 +34,7 @@ export default function Profil() {
             <h2 className="text-center text-secondary mb-4">Mon profil utilisateur</h2>
 
             <div className="profil_container">
-                <img src={hostUriADapter(user.profilePicture)} class="img-thumbnail wild_profile_picture" alt={`${user.username} profile picture`} />
+                <img src={hostUriADapter(user.profilePicture) || defaultPicture} class="img-thumbnail wild_profile_picture" alt={`${user.username} profile picture`} />
                 <Link to="/edit-profil" title="Modifier le profil">
                     <img src={editIcon} alt="edit icon" width={30} height={30} />
                 </Link>

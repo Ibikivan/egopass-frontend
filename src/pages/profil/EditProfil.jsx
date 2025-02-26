@@ -6,6 +6,7 @@ import { hostUriADapter } from "../../utils/helper"
 import { useState } from "react"
 import Button from "../../components/UI/Button"
 import { Link, useNavigate } from "react-router-dom"
+import defaultPicture from '../../assets/defaultPicture.svg'
 
 export default function EditProfil() {
 
@@ -73,7 +74,7 @@ export default function EditProfil() {
                     <div className="d-flex justify-content-center">
                         <label htmlFor="profilePictureInput" style={{ cursor: 'pointer' }}>
                             <img
-                                src={peview || "http://localhost:3000/uploads/profilePictures/profilePicture-1740577835889-226119297.svg"}
+                                src={peview || defaultPicture}
                                 className="img-thumbnail wild_profile_picture"
                                 alt="Aperçu de la photo de profil"
                             />
