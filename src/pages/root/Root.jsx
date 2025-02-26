@@ -22,11 +22,9 @@ export default function Root({ footerRef }) {
         }
     }, [error])
 
-    useEffect(() => {
-        if (user) {
-            sessionStorage.setItem('user', JSON.stringify(user))
-        }
-    }, [user])
+    if (user) {
+        sessionStorage.setItem('user', JSON.stringify(user))
+    }
 
     if (isLoading) return <div className="full_page_spinner"><Spinner otherClass='m-auto' /></div>
 

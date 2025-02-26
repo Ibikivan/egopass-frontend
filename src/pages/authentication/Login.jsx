@@ -18,7 +18,6 @@ export default function Login() {
     usePageTitle(pageConfig.title)
     const { isLoading: isLoging, mutate: logUser, reset } = useMutation(async (e) => await loginApi(e), {
         onSuccess: (user) => {
-            console.log(user)
             reset()
             navigate('/')
         },
