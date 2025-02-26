@@ -42,10 +42,6 @@ function App() {
         }
       ]
     },
-    // {
-    //   path: 'test',
-    //   element: <PageVideoTest />
-    // },
     {
       path: 'login',
       element: <Login />
