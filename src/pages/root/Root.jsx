@@ -15,12 +15,10 @@ export default function Root({ footerRef }) {
     const isOnline = useOnline()
     const navigate = useNavigate()
 
-    useEffect(() => {
-        if (error || (error && error.status === 401)) {
-            // Toast d'information
-            navigate('/login')
-        }
-    }, [error])
+    if (!user || (error && error.status === 401)) {
+        // Toast d'information
+        navigate('/login')
+    }
 
     if (user) {
         sessionStorage.setItem('user', JSON.stringify(user))

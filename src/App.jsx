@@ -9,6 +9,8 @@ import Login from './pages/authentication/Login'
 import ForgottenPassword from './pages/authentication/ForgottenPassword'
 import NotFound from './pages/not_found/NotFound'
 import { useRef } from 'react'
+import RegisterUser from './pages/authentication/RegisterUser'
+import TravelDetails from './pages/travel_details/TravelDetails'
 
 function App() {
 
@@ -26,6 +28,10 @@ function App() {
         {
           path: ':id',
           element: <PassDetails />
+        },
+        {
+          path: 'travel/:id',
+          element: <TravelDetails />
         },
         {
           path: 'profil',
@@ -48,6 +54,10 @@ function App() {
     {
       path: 'forgot-password',
       element: <ForgottenPassword />
+    },
+    {
+      path: 'register',
+      element: <RegisterUser />
     },
     {
       path: '*',

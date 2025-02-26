@@ -73,7 +73,7 @@ export default function EditProfil() {
                     <div className="d-flex justify-content-center">
                         <label htmlFor="profilePictureInput" style={{ cursor: 'pointer' }}>
                             <img
-                                src={peview}
+                                src={peview || "http://localhost:3000/uploads/profilePictures/profilePicture-1740577835889-226119297.svg"}
                                 className="img-thumbnail wild_profile_picture"
                                 alt="Aperçu de la photo de profil"
                             />

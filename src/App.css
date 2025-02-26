@@ -201,3 +201,11 @@ header {
     top: 170px;
     left: 170px;
 }
+
+.login_card_container {
+    margin: 2em 0;
+}
+
+.pass_selector {
+    max-width: 400px !important;
+}

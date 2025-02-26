@@ -68,7 +68,10 @@ export default function Login() {
                     <Button content="Se connecter" classList='mb-3' isLoading={isLoging} />
                 </form>
 
-                <Link to={'/forgot-password'}>Mot de pass oublié ?</Link>
+                <div className='hstack justify-content-between'>
+                    <Link to={'/forgot-password'}>Mot de pass oublié ?</Link>
+                    <Link to={'/register'}>Créer un compte</Link>    
+                </div>
             </motion.div>
         </div>
     </div>

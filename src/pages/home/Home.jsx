@@ -41,6 +41,7 @@ export default function Home({ footerRef }) {
             queryKey={pageConfig.roles[userRole]?.key}
             getter={pageConfig.roles[userRole]?.getter}
             title={pageConfig.roles[userRole]?.title}
+            footerRef={footerRef}
         />}
     </div>
 }

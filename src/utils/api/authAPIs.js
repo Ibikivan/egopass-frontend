@@ -38,8 +38,23 @@ export const getEgoPasses = async (params) => {
     return response.data;
 }
 
+export const getUserFeePass = async () => {
+    const response = await axiosInstance.get('/egopass/getall-userfree')
+    return response.data
+}
+
 export const getUserTravels = async () => {
-    const response = await axiosInstance.get('/users/travels');
+    const response = await axiosInstance.get('/travels/get-all');
+    return response.data;
+}
+
+export const getUserTravel = async (travelId) => {
+    const response = await axiosInstance.get(`/travels/get/${travelId}`);
+    return response.data;
+}
+
+export const addTravel = async (travelData) => {
+    const response = await axiosInstance.post("/travels/create", travelData);
     return response.data;
 }
 
@@ -62,5 +77,20 @@ export const scanQrCode = async (token) => {
 
 export const disactivateFreeCode = async (token) => {
     const response = await axiosInstance.post('/egopass/disactivate', {passToken: token})
+    return response.data
+}
+
+export const registerAbonne = async (userData) => {
+    const response = await axiosInstance.post('/users/register', userData)
+    return response.data
+}
+
+export const registerAgent = async (userData) => {
+    const response = await axiosInstance.post('/users/register-agent', userData)
+    return response.data
+}
+
+export const registerAdmin = async (userData) => {
+    const response = await axiosInstance.post('/users/register-admin', userData)
     return response.data
 }
