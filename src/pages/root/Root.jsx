@@ -17,7 +17,6 @@ export default function Root({ footerRef }) {
 
     useEffect(() => {
         if (error) {
-            debugger
             // Toast d'information
             navigate('/login')
         }
