@@ -6,7 +6,6 @@ import { useQuery } from "react-query";
 import { getLogedUser } from "../../utils/api/authAPIs";
 import Spinner from "../../components/UI/Spinner";
 import { useOnline } from "../../hooks/useOnline";
-import { useEffect } from "react";
 
 export default function Root({ footerRef }) {
 
@@ -15,7 +14,7 @@ export default function Root({ footerRef }) {
     const isOnline = useOnline()
     const navigate = useNavigate()
 
-    if (!user || (error && error.status === 401)) {
+    if (!user || error) {
         // Toast d'information
         navigate('/login')
     }

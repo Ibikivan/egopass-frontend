@@ -31,7 +31,7 @@ export function getIdentifier(method, userData) {
  * @returns {URL} A URL object representing the absolute URL resolved against the base API URL.
  */
 export function hostUriADapter(uri) {
-    return new URL(uri, import.meta.env.VITE_API_URL);
+    if (uri) return new URL(uri, import.meta.env.VITE_API_URL);
 }
 
 /**

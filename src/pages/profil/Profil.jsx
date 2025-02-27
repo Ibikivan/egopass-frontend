@@ -26,6 +26,9 @@ export default function Profil() {
     const queryKey = ['user']
     const { isLoading, data: user, error } = useQuery(queryKey, async () => getLogedUser())
 
+    if (user) delete user['profilePicture']
+    console.log(user)
+
     // if (isLoading) return <Spinner otherClass='m-auto' />
     if (isLoading) return <div className="full_page_spinner"><Spinner otherClass='m-auto' /></div>
 
