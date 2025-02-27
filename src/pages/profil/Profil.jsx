@@ -26,9 +26,6 @@ export default function Profil() {
     const queryKey = ['user']
     const { isLoading, data: user, error } = useQuery(queryKey, async () => getLogedUser())
 
-    if (user) delete user['profilePicture']
-    console.log(user)
-
     // if (isLoading) return <Spinner otherClass='m-auto' />
     if (isLoading) return <div className="full_page_spinner"><Spinner otherClass='m-auto' /></div>
 
@@ -37,62 +34,62 @@ export default function Profil() {
             <h2 className="text-center text-secondary mb-4">Mon profil utilisateur</h2>
 
             <div className="profil_container">
-                <img src={hostUriADapter(user.profilePicture) || defaultPicture} class="img-thumbnail wild_profile_picture" alt={`${user.username} profile picture`} />
+                <img src={hostUriADapter(user.profilePicture) || defaultPicture} className="img-thumbnail wild_profile_picture" alt={`${user.username} profile picture`} />
                 <Link to="/edit-profil" title="Modifier le profil">
                     <img src={editIcon} alt="edit icon" width={30} height={30} />
                 </Link>
             </div>
 
-            <div class="card user_info_card">
-                <div class="card-header">
+            <div className="card user_info_card">
+                <div className="card-header">
                     Informations personnelles
                 </div>
-                <div class="card-body blur_effect">
-                    <h5 class="card-title">Nom d'utilisateur</h5>
-                    <p class="card-text mx-4">{user.username}</p>
+                <div className="card-body blur_effect">
+                    <h5 className="card-title">Nom d'utilisateur</h5>
+                    <p className="card-text mx-4">{user.username}</p>
 
-                    <h5 class="card-title">Prénom</h5>
-                    <p class="card-text mx-4">{user.firstName}</p>
+                    <h5 className="card-title">Prénom</h5>
+                    <p className="card-text mx-4">{user.firstName}</p>
 
-                    <h5 class="card-title">Nom</h5>
-                    <p class="card-text mx-4">{user.lastName}</p>
+                    <h5 className="card-title">Nom</h5>
+                    <p className="card-text mx-4">{user.lastName}</p>
                 </div>
             </div>
 
-            <div class="card user_info_card">
-                <div class="card-header">
+            <div className="card user_info_card">
+                <div className="card-header">
                     Contacs
                 </div>
-                <div class="card-body blur_effect">
-                    <h5 class="card-title">Adresse de messagerie</h5>
-                    <p class="card-text mx-4">{user.email}</p>
+                <div className="card-body blur_effect">
+                    <h5 className="card-title">Adresse de messagerie</h5>
+                    <p className="card-text mx-4">{user.email}</p>
 
-                    <h5 class="card-title">Numero de téléphone</h5>
-                    <p class="card-text mx-4">{user.phoneNumber}</p>
+                    <h5 className="card-title">Numero de téléphone</h5>
+                    <p className="card-text mx-4">{user.phoneNumber}</p>
                 </div>
             </div>
 
-            <div class="card user_info_card">
-                <div class="card-header">
+            <div className="card user_info_card">
+                <div className="card-header">
                     Informations fonctionnelles
                 </div>
-                <div class="card-body blur_effect">
-                    <h5 class="card-title">Permissions</h5>
-                    <p class="card-text mx-4">{user.role}</p>
+                <div className="card-body blur_effect">
+                    <h5 className="card-title">Permissions</h5>
+                    <p className="card-text mx-4">{user.role}</p>
 
                     {(user.role === "AGENT_RVA" || user.role === "ADMIN" || user.role === "SUPER_ADMIN") && <>
-                        <h5 class="card-title">nom du post</h5>
-                        <p class="card-text mx-4">{user[pageConfig.roles[user.role].caled].postNom}</p>
+                        <h5 className="card-title">nom du post</h5>
+                        <p className="card-text mx-4">{user[pageConfig.roles[user.role].caled].postNom}</p>
                     </>}
 
                     {(user.role === "ADMIN" || user.role === "SUPER_ADMIN") && <>
-                        <h5 class="card-title">Fonction</h5>
-                        <p class="card-text mx-4">{user[pageConfig.roles[user.role].caled].fonction}</p>
+                        <h5 className="card-title">Fonction</h5>
+                        <p className="card-text mx-4">{user[pageConfig.roles[user.role].caled].fonction}</p>
                     </>}
 
                     {(user.role === "AGENT_RVA" || user.role === "ADMIN" || user.role === "SUPER_ADMIN") && <>
-                        <h5 class="card-title">Compagnie</h5>
-                        <p class="card-text mx-4">{user[pageConfig.roles[user.role].caled].workplace}</p>
+                        <h5 className="card-title">Compagnie</h5>
+                        <p className="card-text mx-4">{user[pageConfig.roles[user.role].caled].workplace}</p>
                     </>}
                 </div>
             </div>

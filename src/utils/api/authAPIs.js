@@ -94,3 +94,8 @@ export const registerAdmin = async (userData) => {
     const response = await axiosInstance.post('/users/register-admin', userData)
     return response.data
 }
+
+export const logOutUser = async () => {
+    const response = await axiosInstance.post('/users/logout')
+    return response.data
+}

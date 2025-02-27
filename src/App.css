@@ -211,3 +211,7 @@ header {
 .pass_selector {
     max-width: 400px !important;
 }
+
+.logout {
+    width: 25px !important;
+}

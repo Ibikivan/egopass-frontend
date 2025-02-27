@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import { getLogedUser } from "../../utils/api/authAPIs";
 import Spinner from "../../components/UI/Spinner";
 import { useOnline } from "../../hooks/useOnline";
+import { useEffect } from "react";
 
 export default function Root({ footerRef }) {
 
@@ -14,14 +15,24 @@ export default function Root({ footerRef }) {
     const isOnline = useOnline()
     const navigate = useNavigate()
 
-    if (!user || error) {
-        // Toast d'information
-        navigate('/login')
-    }
+    console.log(user)
 
-    if (user) {
-        sessionStorage.setItem('user', JSON.stringify(user))
-    }
+    useEffect(() => {
+        if (error) {
+            debugger
+            // Toast d'information
+            navigate('/login')
+        }
+    }, [error])
+
+    useEffect(() => {
+        if (user) {
+            sessionStorage.setItem('user', JSON.stringify(user))
+        } else {
+            console.log('Uilisateu manquant: ', user)
+        }
+    }, [user])
+
 
     if (isLoading) return <div className="full_page_spinner"><Spinner otherClass='m-auto' /></div>
 
