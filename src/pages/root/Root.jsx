@@ -15,8 +15,6 @@ export default function Root({ footerRef }) {
     const isOnline = useOnline()
     const navigate = useNavigate()
 
-    console.log(user)
-
     useEffect(() => {
         if (error) {
             debugger
