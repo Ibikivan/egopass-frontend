@@ -53,13 +53,19 @@ Bugs Connues:
     -La gestion des erreur n'est pas encore effective, nous y travaillons pour bientôt implementer des Toast informatifs et des ErrorBoudary components plus pertinents.
 
     -Lors du login il arrive que la connexion ait réussi sans que l'utilisaeur ne soit redirigé vers la page d'accueil, sa se produit généralement après un erreur de connexion.
-        Il suffit alors de clucker sur le logo de l'application pour être redirigé vers la page d'accuielle.
+        Il suffit alors de clucker sur le logo de l'application pour être redirigé vers la page d'accuielle. --- Ce bug à été corrigé ---
     
     -La création de voyage par un utilisateur crash parfois pour des raisons de relations innapropriés dans les tables, nous y travaillos et fournissons un utilisateur de test dont les credentials sont les suivantes (avec des voyages déjà crées à des fins de test):
         nom d'utilisateur: ibikivan
         mot de passe: 123456789
 
-    -A cause d'un soucis de configuration du proxy d'appach toute autres route que '/' entrée directement dans la bare d'adresse du navigteur tente de contacter directement le backend et avboutis en une ereur 404 (en cours de résolution).
+    De même qu'un agent pour faire les scans:
+        nom d'utilisateur: agent
+        mot de passe: 12345678
+
+    Pour le moment seul le systeme de pass gratuit est implémenté.
+
+    -A cause d'un soucis de configuration du proxy d'appach toute autres route que '/' entrée directement dans la bare d'adresse du navigteur tente de contacter directement le backend et avboutis en une ereur 404 (en cours de résolution). --- Ce bug à été corrigé ---
 
 Déployement:
     l'application est déployé sur un Instance Amazon Linux AMI 2023 via un serveur appach
