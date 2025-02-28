@@ -23,13 +23,11 @@ export default forwardRef(function ScanCode({closeModal, isModalOpen}, ref) {
     const navigate = useNavigate()
     const { isLoading, mutate, reset } = useMutation(async (token) => await scanQrCode(token), {
         onSuccess: (pass) => {
-            navigate('pass', { state: { id: pass.id, token: tokenRef?.current } })
+            navigate('pass', { state: { id: pass?.pass?.id, token: tokenRef?.current } })
             reset()
         },
         onError: err => console.log(err)
     })
-
-    console.log('token ref', tokenRef)
 
     const handleScan = (result) => {
         if (result && result.length > 0 && result[0].rawValue) {

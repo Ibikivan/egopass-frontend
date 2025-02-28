@@ -9,8 +9,6 @@ export default function EGoPassCard() {
     const location = useLocation()
     const passId = location.state?.id
     const isDeleteble = location.state?.token
-
-    console.log('state', location.state)
     
     const queryClient = useQueryClient()
     const mutateKey = ['egoPasses']
