@@ -3,20 +3,29 @@ import { usePageTitle } from "../../hooks"
 import Spinner from "../UI/Spinner"
 import TravelCard from "./TravelCard"
 import AddTravel from "./AddTravel"
+import TravelFilter from "./TravelFilter"
+import { useEffect, useState } from "react"
 
-export default function AgentRVA({ queryKey, getter, title, footerRef }) {
-
+export default function Abonne({ queryKey, getter, title, profilLoading, footerRef }) {
     usePageTitle(title)
-    const { isLoading, data, error } = useQuery(queryKey, async () => await getter())
+    const [filter, setFilter] = useState({_disactivated: true, _activated: true})
+    const { isLoading, data, error, isFetching, refetch } = useQuery(queryKey, async () => await getter(filter))
     const travels = data || []
 
-    if (isLoading) return <Spinner otherClass='m-auto' />
+    useEffect(() => {
+        refetch()
+    }, [filter])
+
+    if (isLoading || profilLoading) return <Spinner otherClass='m-auto' />
 
     return <div className="agent_home container">
         <h2 className="text-center text-secondary mb-4">Liste de vos voyages</h2>
 
+        <TravelFilter filter={filter} setFilter={setFilter} />
+
         <div className="pass_container">
-            {travels.map((travel, index) => <TravelCard
+            {isFetching ? <Spinner otherClass='m-auto' /> :
+            travels.map((travel, index) => <TravelCard
                 key={`${travel.id}-${index}`}
                 travel={travel}
             />)}

@@ -6,7 +6,7 @@ import EGoPassCard from "./EGoPassCard"
 import { useEffect, useState } from "react"
 import QrCodeScanner from "../home/QrCodeScanner"
 
-export default function AgentRVA({ queryKey, getter, title, footerRef }) {
+export default function AgentRVA({ queryKey, getter, title, profilLoading, footerRef }) {
 
     const [_disactivated, setDisactivated] = useState(true)
     const [_day, setDayd] = useState(false)
@@ -21,7 +21,7 @@ export default function AgentRVA({ queryKey, getter, title, footerRef }) {
         refetch()
     }, [_disactivated, _day, _free, _payed])
 
-    if (isLoading || isFetching) return <Spinner otherClass='m-auto' />
+    if (isLoading || profilLoading) return <Spinner otherClass='m-auto' />
 
     return <div className="agent_home container">
         <h2 className="text-center text-secondary mb-4">Liste des e-GoPass</h2>
@@ -38,12 +38,15 @@ export default function AgentRVA({ queryKey, getter, title, footerRef }) {
         />
 
         <div className="pass_container">
-            {egopass.map((pass, index) => <EGoPassCard
-                key={`${pass.id}-${index}`}
-                pass={pass}
-            />)}
+            {isFetching ? <Spinner otherClass='m-auto' /> :
+                egopass.map((pass, index) => <EGoPassCard
+                    key={`${pass.id}-${index}`}
+                    pass={pass}
+                />)
+            }
         </div>
 
         <QrCodeScanner footerRef={footerRef} />
     </div>
+
 }

@@ -1,4 +1,4 @@
-import { forwardRef, useId, useRef } from "react";
+import { forwardRef, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { handleAnimCoplete, preventClickBehaviour } from "../../utils/helper";
@@ -23,16 +23,20 @@ export default forwardRef(function ScanCode({closeModal, isModalOpen}, ref) {
     const navigate = useNavigate()
     const { isLoading, mutate, reset } = useMutation(async (token) => await scanQrCode(token), {
         onSuccess: (pass) => {
-            navigate(`${pass.id}`, { state: { id: pass.id, token: tokenRef?.current } })
+            navigate('pass', { state: { id: pass.id, token: tokenRef?.current } })
             reset()
         },
         onError: err => console.log(err)
     })
 
+    console.log('token ref', tokenRef)
+
     const handleScan = (result) => {
-        const token = result[0].rawValue
-        tokenRef.current = token
-        mutate(token)
+        if (result && result.length > 0 && result[0].rawValue) {
+            const token = result[0].rawValue
+            tokenRef.current = token
+            mutate(token)
+        }
     }
 
     const handleError = (error) => {

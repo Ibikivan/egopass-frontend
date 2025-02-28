@@ -5,7 +5,7 @@ import InputText from '../../components/UI/InputText';
 import Button from '../../components/UI/Button';
 import { usePageTitle } from '../../hooks';
 import { loginApi } from '../../utils/api/authAPIs';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function Login() {
@@ -14,12 +14,15 @@ export default function Login() {
         title: "eGo-Pass Login"
     }
     const navigate = useNavigate()
+    const queryClient = useQueryClient()
 
+    const queryKey = ['user']
     usePageTitle(pageConfig.title)
     const { isLoading: isLoging, mutate: logUser, reset } = useMutation(async (e) => await loginApi(e), {
         onSuccess: (user) => {
+            queryClient.invalidateQueries(queryKey)
             reset()
-            navigate('/')
+            navigate('/', { state: { logged: true } })
         },
         onError: (err) => console.log(err)
     })

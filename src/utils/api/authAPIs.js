@@ -43,8 +43,11 @@ export const getUserFeePass = async () => {
     return response.data
 }
 
-export const getUserTravels = async () => {
-    const response = await axiosInstance.get('/travels/get-all');
+export const getUserTravels = async (params) => {
+    const searchParams = new URLSearchParams(params)
+    const paramsString = searchParams.toString()
+
+    const response = await axiosInstance.get(`/travels/get-all${paramsString ? `?${paramsString}` : ''}`);
     return response.data;
 }
 

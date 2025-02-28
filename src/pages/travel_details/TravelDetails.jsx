@@ -9,10 +9,10 @@ export default function TravelDetails() {
     const [getCode, setGetCode] = useState(false)
     const location = useLocation()
     const travelId = location.state.id
-    const queryKey = ['travels']
+    const queryKey = ['travel']
     const codeQueryKey = ['freePassQrCode']
     const { isLoading, data: travel, error } = useQuery(queryKey, async () => await getUserTravel(travelId))
-    const { isLoading: fetching, data: pass, error: unfetched, refetch } = useQuery(codeQueryKey, async () => await getFreePassQrCode(travel?.freePass.id), {
+    const { isLoading: fetching, data: pass, error: unfetched } = useQuery(codeQueryKey, async () => await getFreePassQrCode(travel?.freePass.id), {
         enabled: getCode
     })
 
@@ -31,16 +31,16 @@ export default function TravelDetails() {
             {fetching ? (
                 <Spinner otherClass="m-auto" />
             ) : (
-                pass && (<div className={`card border border-${travel.freePass.status === 'ACTIVATED' ? "success" : "danger"}}`} style={{width: "18rem"}}>
+                pass && (<div className={`card border border-${travel.freePass.status === 'ACTIVATED' ? "success" : "danger"}`} style={{width: "18rem"}}>
                     <img src={pass.qrCodeToDataUrl} className="img-fluid rounded-start" alt="free travel qr-code" />
                 </div>)
             )}
 
-            <div className={`card border border-${travel.freePass.status === 'ACTIVATED' ? "success" : "danger"}}`} style={{width: "18rem"}}>
+            <div className={`card border border-${travel.freePass.status === 'ACTIVATED' ? "success" : "danger"}`} style={{width: "18rem"}}>
                 <div className="card-body">
                     <h5 className="card-title text-secondary">Vol de type: {travel.flyType}</h5>
                     <p className="card-text">Pour: {travel.destination}</p>
-                    <p className={`card-text`}>En provenance de {travel.status}</p>
+                    <p className={`card-text`}>En provenance de: {travel.provenance}</p>
                     <p className="card-text"><small className="text-body-secondary">Numero vol: {travel.flyNumber}</small></p>
                 </div>
             </div>

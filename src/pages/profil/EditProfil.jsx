@@ -91,52 +91,52 @@ export default function EditProfil() {
 
                 <fieldset>
                     <legend>Informations personnelles</legend>
-                    <div class="mb-3">
-                        <label for="username" class="form-label">Nom d'utilisateur</label>
-                        <input type="text" name="username" placeholder="Votre nom d'utilisateur" defaultValue={user.username} class="form-control" id="username" />
+                    <div className="mb-3">
+                        <label htmlFor="username" className="form-label">Nom d'utilisateur</label>
+                        <input type="text" name="username" placeholder="Votre nom d'utilisateur" defaultValue={user.username} className="form-control" id="username" />
                     </div>
-                    <div class="mb-3">
-                        <label for="firstName" class="form-label">Prénom</label>
-                        <input type="text" name="firstName" placeholder="Votre prénom" defaultValue={user.firstName}  class="form-control" id="firstName" />
+                    <div className="mb-3">
+                        <label htmlFor="firstName" className="form-label">Prénom</label>
+                        <input type="text" name="firstName" placeholder="Votre prénom" defaultValue={user.firstName}  className="form-control" id="firstName" />
                     </div>
-                    <div class="mb-3">
-                        <label for="lastName" class="form-label">Nom</label>
-                        <input type="text" name="lastName" placeholder="Votre nom" defaultValue={user.lastName} class="form-control" id="lastName" />
+                    <div className="mb-3">
+                        <label htmlFor="lastName" className="form-label">Nom</label>
+                        <input type="text" name="lastName" placeholder="Votre nom" defaultValue={user.lastName} className="form-control" id="lastName" />
                     </div>
                     <Link to="/forgot-password">Changer de mot de passe ?</Link>
                 </fieldset>
 
                 <fieldset>
                     <legend>Contacs</legend>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Adresse de messagerie</label>
-                        <input type="email" name="email" placeholder="Votre adresse email" defaultValue={user.email} class="form-control" id="email" aria-describedby="emailHelp" />
-                        <div id="emailHelp" class="form-text">Nous ne partagerons votre email avec personne d'autres.</div>
+                    <div className="mb-3">
+                        <label htmlFor="email" className="form-label">Adresse de messagerie</label>
+                        <input type="email" name="email" placeholder="Votre adresse email" defaultValue={user.email} className="form-control" id="email" aria-describedby="emailHelp" />
+                        <div id="emailHelp" className="form-text">Nous ne partagerons votre email avec personne d'autres.</div>
                     </div>
-                    <div class="mb-3">
-                        <label for="phoneNumber" class="form-label">Numero de téléphone</label>
-                        <input type="text" name="phoneNumber" placeholder="Votre numéro de téléphone" defaultValue={user.phoneNumber} class="form-control" id="phoneNumber" />
+                    <div className="mb-3">
+                        <label htmlFor="phoneNumber" className="form-label">Numero de téléphone</label>
+                        <input type="text" name="phoneNumber" placeholder="Votre numéro de téléphone" defaultValue={user.phoneNumber} className="form-control" id="phoneNumber" />
                     </div>
                 </fieldset>
 
                 <fieldset>
                     <legend>Informations fonctionnelles</legend>
                     {(user.role === "AGENT_RVA" || user.role === "ADMIN" || user.role === "SUPER_ADMIN") && 
-                        <div class="mb-3">
-                            <label for="postNom" class="form-label">nom du post</label>
-                            <input type="text" name="postNom" placeholder="Votre nom de poste" defaultValue={user[pageConfig.roles[user.role].caled].postNom} class="form-control" id="postNom" />
+                        <div className="mb-3">
+                            <label htmlFor="postNom" className="form-label">nom du post</label>
+                            <input type="text" name="postNom" placeholder="Votre nom de poste" defaultValue={user[pageConfig.roles[user.role].caled].postNom} className="form-control" id="postNom" />
                         </div>
                     }
                     {(user.role === "ADMIN" || user.role === "SUPER_ADMIN") && 
-                        <div class="mb-3">
-                            <label for="fonction" class="form-label">Fonction</label>
-                            <input type="text" name="fonction" placeholder="Votre fonction" defaultValue={user[pageConfig.roles[user.role].caled].fonction} class="form-control" id="fonction" />
+                        <div className="mb-3">
+                            <label htmlFor="fonction" className="form-label">Fonction</label>
+                            <input type="text" name="fonction" placeholder="Votre fonction" defaultValue={user[pageConfig.roles[user.role].caled].fonction} className="form-control" id="fonction" />
                         </div>
                     }
                     {(user.role === "AGENT_RVA" || user.role === "ADMIN" || user.role === "SUPER_ADMIN") && 
-                        <div class="mb-3">
-                            <label for="workplace" class="form-label">Compagnie</label>
-                            <input type="text" name="workplace" placeholder="Votre compagnie d'attache" defaultValue={user[pageConfig.roles[user.role].caled].workplace} class="form-control" id="workplace" />
+                        <div className="mb-3">
+                            <label htmlFor="workplace" className="form-label">Compagnie</label>
+                            <input type="text" name="workplace" placeholder="Votre compagnie d'attache" defaultValue={user[pageConfig.roles[user.role].caled].workplace} className="form-control" id="workplace" />
                         </div>
                     }
                 </fieldset>

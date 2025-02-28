@@ -4,7 +4,7 @@ export default function EGoPassCard({ pass }) {
 
     const navigate = useNavigate()
     const handlePassClick = () => {
-        navigate(`${pass.id}`, { state: {id: pass.id} })
+        navigate('pass', { state: {id: pass.id} })
     }
 
     if (pass) {

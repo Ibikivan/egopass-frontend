@@ -19,21 +19,22 @@ const bodyVariants = {
     hidden: {y: '-50%', opacity: 0}
 }
 
-export default forwardRef(function ScanCode({closeModal, isModalOpen}, ref) {
+export default forwardRef(function EditTravel({ closeModal, isModalOpen }, ref) {
 
     const formRef = useRef(null)
     const queryClient = useQueryClient()
     const mutateKey=['travels']
-    const queryKey = ['egoPasses']
+    const queryKey = ['passes']
 
     const { isLoading, data, error } = useQuery(queryKey, async () => await getUserFeePass())
-    const egopass = data?.filter(pass => pass.status === "ACTIVATED") || []
+    const pass = data || []
+    const egopass = pass.filter(pass => pass.status === "ACTIVATED")
 
     const { isLoading: adding, mutate, reset } = useMutation(async (data) => await addTravel(data), {
         onSuccess: (travel) => {
             queryClient.setQueryData(mutateKey, (travels) => {
-                console.log({travels, travels})
                 travels.unshift(travel)
+                return travels
             })
             closeModal()
             formRef.current.reset()
@@ -181,4 +182,5 @@ export default forwardRef(function ScanCode({closeModal, isModalOpen}, ref) {
             </div>
         </motion.div>
     </motion.div>, document.body)
+
 })

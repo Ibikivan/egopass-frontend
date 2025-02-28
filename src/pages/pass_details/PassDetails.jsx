@@ -7,16 +7,19 @@ import Button from "../../components/UI/Button"
 export default function EGoPassCard() {
 
     const location = useLocation()
-    const passId = location.state.id
+    const passId = location.state?.id
     const isDeleteble = location.state?.token
+
+    console.log('state', location.state)
     
     const queryClient = useQueryClient()
-    const mutateKey = ['egoPasses, freePassQrCode']
+    const mutateKey = ['egoPasses']
     const queryKey = ['freePassQrCode']
     const { isLoading, data: pass, error } = useQuery(queryKey, async () => await getFreePassQrCode(passId))
 
     const { isLoading: disactivating, mutate, reset } = useMutation(async (token) => await disactivateFreeCode(token), {
         onSuccess: (mutatePass) => {
+            queryClient.invalidateQueries(queryKey)
             queryClient.setQueryData(mutateKey, (passLis) => {
                 try {
                     const newList = passLis.filter(pass => pass.id === mutatePass.id)
@@ -51,7 +54,7 @@ export default function EGoPassCard() {
                 </div>
             </div>
 
-            <Button content={'Déactiver'} type="button" onClick={handleDisactivate} isLoading={disactivating} />
+            {isDeleteble && <Button content={'Déactiver'} type="button" onClick={handleDisactivate} isLoading={disactivating} classList="disactivator" />}
         </div>
     }
 }

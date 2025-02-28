@@ -26,11 +26,11 @@ function App() {
           element: <Home footerRef={footerRef} />
         },
         {
-          path: ':id',
+          path: 'pass',
           element: <PassDetails />
         },
         {
-          path: 'travel/:id',
+          path: 'travel',
           element: <TravelDetails />
         },
         {

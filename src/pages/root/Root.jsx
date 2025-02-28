@@ -1,35 +1,34 @@
 import { ErrorBoundary } from "react-error-boundary";
 import Footer from "../../components/layouts/Footer";
 import Header from "../../components/layouts/Header";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import { getLogedUser } from "../../utils/api/authAPIs";
 import Spinner from "../../components/UI/Spinner";
 import { useOnline } from "../../hooks/useOnline";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
+import { ProfilContext } from "../../hooks/useProfil";
 
 export default function Root({ footerRef }) {
 
+    const { setUserProfil } = useContext(ProfilContext)
     const queryKey = ['user']
-    const { isLoading, data: user, error } = useQuery(queryKey, async () => getLogedUser())
+    const { isLoading, data: user, error, isSuccess } = useQuery(queryKey, async () => getLogedUser())
     const isOnline = useOnline()
     const navigate = useNavigate()
+    const location = useLocation()
+    const isLogged = location.state?.logged
 
     useEffect(() => {
-        if (error) {
+        if (error && !isLogged) {
             // Toast d'information
             navigate('/login')
         }
     }, [error])
 
     useEffect(() => {
-        if (user) {
-            sessionStorage.setItem('user', JSON.stringify(user))
-        } else {
-            console.log('Uilisateu manquant: ', user)
-        }
-    }, [user])
-
+        if (user && isSuccess) setUserProfil({user, isLoading})
+    }, [user, isSuccess, isLoading])
 
     if (isLoading) return <div className="full_page_spinner"><Spinner otherClass='m-auto' /></div>
 

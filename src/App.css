@@ -8,7 +8,7 @@
 }
 
 .fullHeight {
-    min-height: 100vh !important;
+    min-height: 80vh !important;
 }
 
 header {
@@ -214,4 +214,8 @@ header {
 
 .logout {
     width: 25px !important;
+}
+
+.disactivator {
+    max-width: 286px;
 }
