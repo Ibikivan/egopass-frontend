@@ -6,7 +6,7 @@ export default function TravelFilter({ filter, setFilter }) {
         setFilter({ ...filter, [name]: checked })
     }
   
-    return <div className="filter_container">
+    return <div className="filter_container soft_shadow">
         <h3 className="text-secondary">Appliquer les filtres</h3>
         <div className="form-check hstack flex-wrap gap-5">
             <div>

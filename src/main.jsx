@@ -5,15 +5,20 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import App from './App.jsx'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ProfileContextProvider } from './hooks/useProfil.jsx'
+import { ToastContextProvider } from './hooks/useToast.jsx'
+import Toast from './components/UI/Toast.jsx'
 
 const queryClient = new QueryClient
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ProfileContextProvider>
-      <QueryClientProvider client={queryClient}>
-        <App />
-      </QueryClientProvider>
+      <ToastContextProvider>
+        <QueryClientProvider client={queryClient}>
+          <App />
+          <Toast message="Connexion réussie" />
+        </QueryClientProvider>
+      </ToastContextProvider>
     </ProfileContextProvider>
   </StrictMode>,
 )

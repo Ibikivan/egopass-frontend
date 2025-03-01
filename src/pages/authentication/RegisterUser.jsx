@@ -8,6 +8,9 @@ import { useMutation } from 'react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import { registerAbonne, registerAdmin, registerAgent } from '../../utils/api/authAPIs';
 import logo from './../../assets/eGo-Pass_logo.png';
+import eyeIcon from '../../assets/eye.svg';
+import eyeSlashedIcon from '../../assets/eye-slash.svg';
+import { useState } from 'react';
 
 export default function RegisterUser() {
     const pageConfig = {
@@ -23,6 +26,7 @@ export default function RegisterUser() {
     }
     const navigate = useNavigate();
     usePageTitle(pageConfig.title);
+    const [isPwdVisible, setIsPwdVisible] = useState(false)
 
     const currentUser = JSON.parse(sessionStorage.getItem('user'));
     const userRole = currentUser?.role;
@@ -53,6 +57,10 @@ export default function RegisterUser() {
         delete registerData["confirmPassword"];
         registerUser(registerData);
     };
+
+    const togglePwdVisible = () => {
+        setIsPwdVisible(!isPwdVisible)
+    }
 
     return <div className='vstack' style={{ minHeight: '100vh' }}>
         <div className="login_header">
@@ -109,24 +117,36 @@ export default function RegisterUser() {
                     placeholder="Votre numéro de téléphone"
                     required={true}
                 />
-                <InputText
-                    containerClasses="mb-3"
-                    id="password"
-                    name="password"
-                    label="Mot de passe"
-                    type="password"
-                    placeholder="Votre mot de passe"
-                    required={true}
-                />
-                <InputText
-                    containerClasses="mb-3"
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    label="Confirmer le mot de passe"
-                    type="password"
-                    placeholder="Confirmez votre mot de passe"
-                    required={true}
-                />
+                <div className='position-relative'>
+                    <InputText
+                        containerClasses="mb-3"
+                        id="password"
+                        name="password"
+                        label="Mot de passe"
+                        type={isPwdVisible ? 'text' : 'password'}
+                        placeholder="Votre mot de passe"
+                        required={true}
+                    />
+                    {isPwdVisible
+                        ? <img src={eyeSlashedIcon} onClick={togglePwdVisible} alt='eye slashed icon' className='pwd_eye_icon' />
+                        : <img src={eyeIcon} onClick={togglePwdVisible} alt='eye icon' className='pwd_eye_icon' />
+                    }
+                </div>
+                <div className="position-relative">
+                    <InputText
+                        containerClasses="mb-3"
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        label="Confirmer le mot de passe"
+                        type={isPwdVisible ? 'text' : 'password'}
+                        placeholder="Confirmez votre mot de passe"
+                        required={true}
+                    />
+                    {isPwdVisible
+                        ? <img src={eyeSlashedIcon} onClick={togglePwdVisible} alt='eye slashed icon' className='pwd_eye_icon' />
+                        : <img src={eyeIcon} onClick={togglePwdVisible} alt='eye icon' className='pwd_eye_icon' />
+                    }
+                </div>
                 <Button content="Créer le compte" classList="mb-3" isLoading={isLoading} />
             </form>
             <p className="text-center">

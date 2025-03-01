@@ -169,10 +169,7 @@ export default forwardRef(function EditTravel({ closeModal, isModalOpen }, ref) 
                                     key={`${pass.id}-${index}`}
                                     value={pass.id}
                                 >
-                                    <div className="hstack justify-content-between border border-success pass_selector">
-                                        <h4 className="text-secondary">Pass Gratuit</h4>
-                                        <p>PASS ACTIF</p>
-                                    </div>
+                                    <h4 className="text-secondary">Pass Gratuit</h4>
                                 </option>)}
                             </select>
                         )}

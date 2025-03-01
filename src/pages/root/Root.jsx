@@ -8,6 +8,7 @@ import Spinner from "../../components/UI/Spinner";
 import { useOnline } from "../../hooks/useOnline";
 import { useContext, useEffect } from "react";
 import { ProfilContext } from "../../hooks/useProfil";
+import Toast from "../../components/UI/Toast";
 
 export default function Root({ footerRef }) {
 
@@ -35,13 +36,14 @@ export default function Root({ footerRef }) {
     if (user) {
         return <div className="vstack fullHeight">
             <Header userInfo={{userName: user?.username, picture: user?.profilePicture, isOnline: isOnline}} />
-                <ErrorBoundary
-                    fallback={<h3>Oup's, une erreur est survenue</h3>}
-                    onReset={() => console.log("reset appliqué")}
-                >
-                    <Outlet />
-                </ErrorBoundary>
+            <ErrorBoundary
+                fallback={<h3>Oup's, une erreur est survenue</h3>}
+                onReset={() => console.log("reset appliqué")}
+            >
+                <Outlet />
+            </ErrorBoundary>
             <Footer ref={footerRef} />
+            
         </div>
     }
 }

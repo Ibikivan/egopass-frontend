@@ -15,7 +15,13 @@ header {
     position: sticky;
     top: 0;
     z-index: 1000;
-}  
+}
+
+.header_skirt {
+    padding-bottom: .5em;
+    background: #FE963A;
+    box-shadow: 0 5px 7px #3232321a, 0 2px 5px #0000001a;
+}
 
 .login_header {
     background: white;
@@ -99,6 +105,14 @@ header {
     background: rgba(255, 255, 255, 0.8);
 }
 
+.soft_shadow {
+    box-shadow: 0 4px 8px #3232321a;
+}
+
+.hard_shadow {
+    box-shadow: 0 15px 35px #3232321a, 0 5px 15px #0000001a;
+}
+
 .agent_home {
     padding: 2em 1em;
     display: flex;
@@ -119,9 +133,23 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 200px;
     width: 100%;
-    background: white;
+    background: #1836415b;
+    padding: 4em 5em;
+    border-top: solid 2px #183641;
+}
+.footer p {
+    margin-bottom: 0;
+}
+.footer a {
+    text-decoration: none;
+}
+.footer > div {
+    flex-wrap: wrap
+}
+.footer h3 {
+    color: white;
+    font-weight: bold;
 }
 
 .wild_profile_picture {
@@ -182,7 +210,7 @@ header {
     border-radius: 50%;
     border: none;
     box-shadow: 0 0 2px black;
-    background: #173540;
+    background: #FE963A;
     /* transition: all 0.3s ease-in-out; */
 }
 .add_post:hover {
@@ -218,4 +246,44 @@ header {
 
 .disactivator {
     max-width: 286px;
+}
+
+.pwd_eye_icon {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    top: calc(1rem + 38px - 25px + 9px);
+    right: calc(.75rem);
+    cursor: pointer;
+}
+
+.toast_container {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    gap: .5em;
+    padding: .5em;
+    border-radius: 50px;
+    color: white;
+    font-weight: bold;
+    font-size: large;
+    max-width: 400px;
+    z-index: 1001;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.toast_container p {
+    margin-bottom: 0;
+}
+
+.toast_success {
+    background: #2f8754ad;
+}
+.toast_danger {
+    background: #dc3d4598;
+}
+
+.close_toast {
+    cursor: pointer;
 }

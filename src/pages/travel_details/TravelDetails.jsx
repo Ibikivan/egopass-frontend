@@ -31,12 +31,12 @@ export default function TravelDetails() {
             {fetching ? (
                 <Spinner otherClass="m-auto" />
             ) : (
-                pass && (<div className={`card border border-${travel.freePass.status === 'ACTIVATED' ? "success" : "danger"}`} style={{width: "18rem"}}>
+                pass && (<div className={`card hard_shadow border border-${travel.freePass.status === 'ACTIVATED' ? "success" : "danger"}`} style={{width: "18rem"}}>
                     <img src={pass.qrCodeToDataUrl} className="img-fluid rounded-start" alt="free travel qr-code" />
                 </div>)
             )}
 
-            <div className={`card border border-${travel.freePass.status === 'ACTIVATED' ? "success" : "danger"}`} style={{width: "18rem"}}>
+            <div className={`card hard_shadow border border-${travel.freePass.status === 'ACTIVATED' ? "success" : "danger"}`} style={{width: "18rem"}}>
                 <div className="card-body">
                     <h5 className="card-title text-secondary">Vol de type: {travel.flyType}</h5>
                     <p className="card-text">Pour: {travel.destination}</p>

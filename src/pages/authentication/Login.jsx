@@ -7,6 +7,10 @@ import { usePageTitle } from '../../hooks';
 import { loginApi } from '../../utils/api/authAPIs';
 import { useMutation, useQueryClient } from 'react-query';
 import { Link, useNavigate } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import eyeIcon from '../../assets/eye.svg';
+import eyeSlashedIcon from '../../assets/eye-slash.svg';
+import { ToastContext } from '../../hooks/useToast';
 
 export default function Login() {
 
@@ -15,16 +19,19 @@ export default function Login() {
     }
     const navigate = useNavigate()
     const queryClient = useQueryClient()
+    const [isPwdVisible, setIsPwdVisible] = useState(false)
+    const { openToast } = useContext(ToastContext)
 
     const queryKey = ['user']
     usePageTitle(pageConfig.title)
     const { isLoading: isLoging, mutate: logUser, reset } = useMutation(async (e) => await loginApi(e), {
         onSuccess: (user) => {
+            openToast({ message: 'Connexion réussie' })
             queryClient.invalidateQueries(queryKey)
             reset()
             navigate('/', { state: { logged: true } })
         },
-        onError: (err) => console.log(err)
+        onError: (err) => openToast({ message: err?.response?.data?.message || 'Erreur de connexion', type: 'failled' })
     })
 
     const handleSubmit = (e) => {
@@ -33,6 +40,10 @@ export default function Login() {
         const loginData = Object.fromEntries(formData.entries());
         logUser(loginData);
     };
+
+    const togglePwdVisible = () => {
+        setIsPwdVisible(!isPwdVisible)
+    }
 
     return <div
         className='vstack'
@@ -59,15 +70,21 @@ export default function Login() {
                         placeholder="Votre nom d'utilisateur"
                         required={true}
                     />
-                    <InputText
-                        containerClasses='mb-3'
-                        id='password'
-                        name='password'
-                        label='Mot de passe'
-                        type='password'
-                        required={true}
-                        placeholder="Votre mot de passe"
-                    />
+                    <div className='position-relative'>
+                        <InputText
+                            containerClasses='mb-3'
+                            id='password'
+                            name='password'
+                            label='Mot de passe'
+                            type={isPwdVisible ? 'text' : 'password'}
+                            required={true}
+                            placeholder="Votre mot de passe"
+                        />
+                        {isPwdVisible
+                            ? <img src={eyeSlashedIcon} onClick={togglePwdVisible} alt='eye slashed icon' className='pwd_eye_icon' />
+                            : <img src={eyeIcon} onClick={togglePwdVisible} alt='eye icon' className='pwd_eye_icon' />
+                        }
+                    </div>
                     <Button content="Se connecter" classList='mb-3' isLoading={isLoging} />
                 </form>
 

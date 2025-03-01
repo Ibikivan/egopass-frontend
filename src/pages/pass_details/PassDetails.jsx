@@ -42,7 +42,7 @@ export default function EGoPassCard() {
         return <div className="agent_home container">
             <h2 className="text-center mb-4 text-secondary">E-GO PASS N° {pass.pass.id}</h2>
         
-            <div className={`card border border-${pass.pass.status === 'ACTIVATED' ? "success" : "danger"}}`} style={{width: "18rem"}}>
+            <div className={`card hard_shadow border border-${pass.pass.status === 'ACTIVATED' ? "success" : "danger"}}`} style={{width: "18rem"}}>
                 <img src={pass.qrCodeToDataUrl} className="img-fluid rounded-start" alt="free pass qr-code" />
                 <div className="card-body">
                     <h5 className="card-title text-secondary">{pass.pass.amount > 0 ? "Pass Payant" : "Pass Gratuit"}</h5>

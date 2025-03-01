@@ -4,6 +4,7 @@ import AgentRVA from "../../components/agentRVA";
 import { getEgoPasses, getUserTravels } from "../../utils/api/authAPIs";
 import { Link } from "react-router-dom";
 import { ProfilContext } from "../../hooks/useProfil";
+import Toast from "../../components/UI/Toast";
 
 export default function Home({ footerRef }) {
 
@@ -37,6 +38,8 @@ export default function Home({ footerRef }) {
     }
 
     return <div className="container fullHeight vstack align-items-center">
+        
+
         {userRole === 'AGENT_RVA' && <AgentRVA
             queryKey={pageConfig.roles[userRole]?.key}
             getter={pageConfig.roles[userRole]?.getter}
