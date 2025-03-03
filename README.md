@@ -50,12 +50,12 @@ Etat des lieux
 Bugs Connues:
     il existe un certain nombre de bugs connus sur lesquels nous travaillons activement. Merci de signaler tous nouveaux bugs rencontrés.
 
-    -La gestion des erreur n'est pas encore effective, nous y travaillons pour bientôt implementer des Toast informatifs et des ErrorBoudary components plus pertinents.
+    -La gestion des erreur n'est pas encore effective, nous y travaillons pour bientôt implementer des Toast informatifs et des ErrorBoudary components plus pertinents. --- Les Toasts informatifs on été ajoutés ---
 
     -Lors du login il arrive que la connexion ait réussi sans que l'utilisaeur ne soit redirigé vers la page d'accueil, sa se produit généralement après un erreur de connexion.
-        Il suffit alors de clucker sur le logo de l'application pour être redirigé vers la page d'accuielle. --- Ce bug à été corrigé ---
+        Il suffit alors de clicker sur le logo de l'application pour être redirigé vers la page d'accuielle. --- Ce bug à été corrigé ---
     
-    -La création de voyage par un utilisateur crash parfois pour des raisons de relations innapropriés dans les tables, nous y travaillos et fournissons un utilisateur de test dont les credentials sont les suivantes (avec des voyages déjà crées à des fins de test):
+    -La création de voyage par un utilisateur échoue parfois pour des raisons de relations innapropriés dans les tables, nous y travaillos et fournissons un utilisateur de test dont les credentials sont les suivantes (avec des voyages déjà crées à des fins de test):
         nom d'utilisateur: ibikivan
         mot de passe: 123456789
 
