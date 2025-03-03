@@ -23,16 +23,17 @@ export default function EGoPassCard() {
             queryClient.invalidateQueries(queryKey)
             queryClient.setQueryData(mutateKey, (passLis) => {
                 try {
+                    openToast({ message: "Pass désactivé" })
                     const newList = passLis.filter(pass => pass.id === mutatePass.id)
                     newList.unshift(mutatePass)
                     return newList
                 } catch (error) {
-                    console.log('Erreur de mise à jour du cache: ', error)
+                    openToast({ message: "Erreur de mise en cache", type: "failed" })
                 }
             })
             reset()
         },
-        onError: err => openToast({ message: err?.response?.data?.message, type: "failed" })
+        onError: err => openToast({ message: err?.response?.data?.message || "Erreur inattendue", type: "failed" })
     })
 
     const handleDisactivate = () => {

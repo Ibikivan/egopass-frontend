@@ -32,9 +32,9 @@ export default function ForgotPassword() {
     const { mutate: checkUser, isLoading: checkingUser } = useMutation(getUserByEmail, {
         onSuccess: (data) => {
             if (!data) {
-                openToast({ message: "Utilisateur trouvé" });
                 return;
             }
+            openToast({ message: "Utilisateur trouvé" });
             setUserData(data);
             setStep("method");
         },
@@ -60,7 +60,7 @@ export default function ForgotPassword() {
     // Étape 4 : Réinitialisation du mot de passe
     const { mutate: resetPasswordMutation, isLoading: resettingPassword } = useMutation(resetPasswordApi, {
         onSuccess: () => {
-            openToast({ message: error?.response?.data?.message || "Mot de passe réinitialisé" })
+            openToast({ message: "Mot de passe réinitialisé" })
             navigate('/login');
         },
         onError: (error) => openToast({ message: error?.response?.data?.message || "Erreur de réinitialisation", type: "failed" })

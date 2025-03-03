@@ -5,20 +5,21 @@ import { Link, useNavigate } from "react-router-dom"
 import defaultPicture from '../../assets/defaultPicture.svg'
 import Button from "../UI/Button"
 import logOut from "../../assets/logOutIcon.svg"
-import { useMutation, useQuery } from "react-query"
+import { useMutation } from "react-query"
 import { logOutUser } from "../../utils/api/authAPIs"
-import { useEffect, useState } from "react"
+import { useContext } from "react"
+import { ToastContext } from "../../hooks/useToast"
 
 export default function Header({ userInfo }) {
     const { userName, picture, isOnline } = userInfo
 
+    const { openToast } = useContext(ToastContext)
     const navigate = useNavigate()
     const { isLoading, mutate } = useMutation(async () => logOutUser(), {
         onSuccess: () => {
-            console.log('mutate')
             navigate('/login')
         },
-        onError: err => console.log(err)
+        onError: err => openToast({ message: "Une erreur est survenue", type: "failed" })
     })
 
     return <header>
