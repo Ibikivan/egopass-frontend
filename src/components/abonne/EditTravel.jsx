@@ -52,7 +52,6 @@ export default forwardRef(function EditTravel({ closeModal, isModalOpen }, ref) 
         const formData = new FormData(e.target)
         const travelData = { ...Object.fromEntries(formData) }
         if (travelData.passId) travelData.passId = parseInt(travelData.passId, 10)
-        console.log(travelData)
         mutate(travelData)
     }
 

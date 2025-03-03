@@ -24,11 +24,11 @@ export default function EGoPassCard() {
             queryClient.setQueryData(mutateKey, (passLis) => {
                 try {
                     openToast({ message: "Pass désactivé" })
-                    const newList = passLis.filter(pass => pass.id === mutatePass.id)
-                    newList.unshift(mutatePass)
+                    const newList = passLis?.filter(pass => pass.id === mutatePass.id)
+                    newList?.unshift(mutatePass)
                     return newList
                 } catch (error) {
-                    openToast({ message: "Erreur de mise en cache", type: "failed" })
+                    console.warn("Attention: Erreur dans la gestion du cache")
                 }
             })
             reset()
