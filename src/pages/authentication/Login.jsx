@@ -31,7 +31,7 @@ export default function Login() {
             reset()
             navigate('/', { state: { logged: true } })
         },
-        onError: (err) => openToast({ message: err?.response?.data?.message || 'Erreur de connexion', type: 'failled' })
+        onError: (err) => openToast({ message: err?.response?.data?.message || 'Erreur de connexion', type: 'failed' })
     })
 
     const handleSubmit = (e) => {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useMutation } from 'react-query';
 import { Link, useNavigate } from 'react-router-dom';
@@ -16,30 +16,29 @@ import OTPVerificationStep from '../../components/forgotPassword/OTPVerification
 import NewPasswordStep from '../../components/forgotPassword/NewPasswordStep';
 import { usePageTitle } from '../../hooks';
 import { getIdentifier } from '../../utils/helper';
+import { ToastContext } from '../../hooks/useToast';
 
 export default function ForgotPassword() {
     const pageConfig = { title: "Réinitialisation du mot de passe" };
+    const { openToast } = useContext(ToastContext);
     usePageTitle(pageConfig.title);
     const navigate = useNavigate();
 
     const [step, setStep] = useState("email"); // "email", "method", "otp", "newPassword"
     const [userData, setUserData] = useState(null);
     const [method, setMethod] = useState(null);
-    const [otp, setOtp] = useState("");
 
     // Étape 1 : Vérification de l'existence de l'utilisateur
     const { mutate: checkUser, isLoading: checkingUser } = useMutation(getUserByEmail, {
         onSuccess: (data) => {
             if (!data) {
-                alert("Utilisateur non trouvé");
+                openToast({ message: "Utilisateur trouvé" });
                 return;
             }
             setUserData(data);
             setStep("method");
         },
-            onError: (error) => {
-            alert(error.message || "Utilisateur non trouvé");
-        }
+        onError: (error) => openToast({ message: error?.response?.data?.message || "Utilisateur non trouvé", type: "failed" })
     });
 
     // Étape 2 : Envoi du code OTP
@@ -47,9 +46,7 @@ export default function ForgotPassword() {
         onSuccess: () => {
             setStep("otp");
         },
-        onError: (error) => {
-            alert(error.message || "Erreur lors de l'envoi du code OTP");
-        }
+        onError: (error) => openToast({ message: error?.response?.data?.message || "Erreur d'envoi du code", type: "failed" })
     });
 
     // Étape 3 : Vérification du code OTP
@@ -57,20 +54,16 @@ export default function ForgotPassword() {
         onSuccess: () => {
             setStep("newPassword");
         },
-        onError: (error) => {
-            alert(error.message || "Code OTP invalide");
-        }
+        onError: (error) => openToast({ message: error?.response?.data?.message || "Code OTP invalide", type: "failed" })
     });
 
     // Étape 4 : Réinitialisation du mot de passe
     const { mutate: resetPasswordMutation, isLoading: resettingPassword } = useMutation(resetPasswordApi, {
         onSuccess: () => {
-            alert("Mot de passe réinitialisé avec succès");
-            navigate('/login'); // redirige vers la page de connexion
+            openToast({ message: error?.response?.data?.message || "Mot de passe réinitialisé" })
+            navigate('/login');
         },
-        onError: (error) => {
-            alert(error.message || "Erreur lors de la réinitialisation du mot de passe");
-        }
+        onError: (error) => openToast({ message: error?.response?.data?.message || "Erreur de réinitialisation", type: "failed" })
     });
 
     const handleEmailSubmit = (email) => {

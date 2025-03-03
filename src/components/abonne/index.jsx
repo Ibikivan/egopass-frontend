@@ -4,10 +4,12 @@ import Spinner from "../UI/Spinner"
 import TravelCard from "./TravelCard"
 import AddTravel from "./AddTravel"
 import TravelFilter from "./TravelFilter"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import { ToastContext } from "../../hooks/useToast"
 
 export default function Abonne({ queryKey, getter, title, profilLoading, footerRef }) {
     usePageTitle(title)
+    const { openToast } = useContext(ToastContext)
     const [filter, setFilter] = useState({_disactivated: true, _activated: true})
     const { isLoading, data, error, isFetching, refetch } = useQuery(queryKey, async () => await getter(filter))
     const travels = data || []
@@ -15,7 +17,8 @@ export default function Abonne({ queryKey, getter, title, profilLoading, footerR
     useEffect(() => {
         refetch()
     }, [filter])
-
+    
+    if (error) openToast({ message: "Erreur inattendue", type: "failed" })
     if (isLoading || profilLoading) return <Spinner otherClass='m-auto' />
 
     return <div className="agent_home container">

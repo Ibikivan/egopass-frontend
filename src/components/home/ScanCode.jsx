@@ -1,4 +1,4 @@
-import { forwardRef, useRef } from "react";
+import { forwardRef, useContext, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { handleAnimCoplete, preventClickBehaviour } from "../../utils/helper";
@@ -6,6 +6,7 @@ import ScanInterface from "./ScanInterface";
 import { useMutation } from "react-query";
 import { scanQrCode } from "../../utils/api/authAPIs";
 import { useNavigate } from "react-router-dom";
+import { ToastContext } from "../../hooks/useToast";
 
 const coverVariants = {
     visible: {opacity: 1},
@@ -19,14 +20,16 @@ const bodyVariants = {
 
 export default forwardRef(function ScanCode({closeModal, isModalOpen}, ref) {
 
+    const { openToast } = useContext(ToastContext)
     const tokenRef = useRef(null)
     const navigate = useNavigate()
     const { isLoading, mutate, reset } = useMutation(async (token) => await scanQrCode(token), {
         onSuccess: (pass) => {
+            openToast({ message: "Code valide" })
             navigate('pass', { state: { id: pass?.pass?.id, token: tokenRef?.current } })
             reset()
         },
-        onError: err => console.log(err)
+        onError: err => openToast({ message: err?.response?.data?.message || "Erreur inconnue", type: "failed" })
     })
 
     const handleScan = (result) => {
@@ -38,7 +41,7 @@ export default forwardRef(function ScanCode({closeModal, isModalOpen}, ref) {
     }
 
     const handleError = (error) => {
-        console.log("erreur de scan", error)
+        openToast({ message: "Erreur de scan", type: "failed" })
     }
 
     return createPortal(<motion.div

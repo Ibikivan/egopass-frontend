@@ -5,6 +5,7 @@ import closeIcon from '../../assets/close.svg'
 import closeSuccessIcon from '../../assets/close-success.svg'
 import { useContext, useEffect, useState } from 'react'
 import { ToastContext } from '../../hooks/useToast'
+import { createPortal } from 'react-dom'
 
 const wrapperVariants = {
     hidden: { y: '-500px', x: '-50%', transition: { when: 'afterChildren' } },
@@ -19,45 +20,46 @@ const messageVariants = {
     visible: { display: '' }
 }
 
-export default function Toast({ message="SUCCESS", type='success', delay=3000, onClose=()=>null }) {
+export default function Toast({ message="SUCCESS", type='success', delay=3000, onClose }) {
     const config = {
         success: {
             icon: checkIcon,
             close: closeSuccessIcon,
             classTag: "success"
         },
-        failled: {
+        failed: {
             icon: circleCrossIcon,
             close: closeIcon,
             classTag: "danger"
         }
     }
 
-    const { isToastOpen, closeToast } = useContext(ToastContext)
-    const [openToast, setopenToast] = useState(false)
+    const { toast, closeToast } = useContext(ToastContext)
 
     useEffect(() => {
-        if (isToastOpen) setopenToast(true)
-        const preToastTimeout = setTimeout(() => {
-            setopenToast(false)
-        }, delay)
-        const toastTimeout = setTimeout(() => {
-            closeToast()
-        }, delay + 1000)
-
+        let toastTimeout
+        if (toast?.isOpen) {
+            toastTimeout = setTimeout(() => {
+                closeToast()
+            }, delay + 1000)
+        }
         return () => {
-            clearTimeout(preToastTimeout)
             clearTimeout(toastTimeout)
         }
-    }, [isToastOpen])
+    }, [toast?.isOpen])
 
-    return <motion.div
-        className={`toast_container toast_${config[isToastOpen?.type || type].classTag} border border-${config[isToastOpen?.type || type].classTag}`}
+    return createPortal(<motion.div
+        className={`toast_container toast_${config[toast?.data?.type || type].classTag} border border-${config[toast?.data?.type || type].classTag}`}
         variants={wrapperVariants}
-        animate={openToast ? 'visible' : 'hidden'}
+        animate={toast.isOpen ? 'visible' : 'hidden'}
     >
-        <motion.img src={config[isToastOpen?.type || type].icon} alt="check icon" variants={iconVariants} />
-        <motion.p variants={messageVariants}>{isToastOpen?.message || message}</motion.p>
-        <img src={config[isToastOpen?.type || type].close} alt={`close ${isToastOpen?.type || type}`} className='close_toast' />
-    </motion.div>
+        <motion.img src={config[toast?.data?.type || type].icon} alt="check icon" variants={iconVariants} />
+        <motion.p variants={messageVariants}>{toast?.data?.message || message}</motion.p>
+        <img
+            src={config[toast?.data?.type || type].close}
+            alt={`close ${toast?.data?.type || type}`}
+            className='close_toast'
+            onClick={closeToast || onClose}
+        />
+    </motion.div>, document.body)
 }

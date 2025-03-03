@@ -1,4 +1,4 @@
-import { forwardRef, useRef } from "react";
+import { forwardRef, useContext, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { handleAnimCoplete, preventClickBehaviour } from "../../utils/helper";
@@ -8,6 +8,7 @@ import InputText from "../UI/InputText";
 import Button from "../UI/Button";
 import Spinner from "../UI/Spinner";
 import EGoPassCard from "../agentRVA/EGoPassCard";
+import { ToastContext } from "../../hooks/useToast";
 
 const coverVariants = {
     visible: {opacity: 1},
@@ -25,6 +26,7 @@ export default forwardRef(function EditTravel({ closeModal, isModalOpen }, ref) 
     const queryClient = useQueryClient()
     const mutateKey=['travels']
     const queryKey = ['passes']
+    const { openToast } = useContext(ToastContext)
 
     const { isLoading, data, error } = useQuery(queryKey, async () => await getUserFeePass())
     const pass = data || []
@@ -32,15 +34,17 @@ export default forwardRef(function EditTravel({ closeModal, isModalOpen }, ref) 
 
     const { isLoading: adding, mutate, reset } = useMutation(async (data) => await addTravel(data), {
         onSuccess: (travel) => {
+            queryClient.invalidateQueries(mutateKey)
             queryClient.setQueryData(mutateKey, (travels) => {
                 travels.unshift(travel)
+                openToast({ message: "Voyage ajouté !" })
                 return travels
             })
             closeModal()
             formRef.current.reset()
             reset()
         },
-        onError: err => console.log(err)
+        onError: err => openToast({ message: "Erreur lors de l'ajout", type: "failed" })
     })
 
     const handleSubmit = (e) => {
@@ -51,6 +55,8 @@ export default forwardRef(function EditTravel({ closeModal, isModalOpen }, ref) 
         console.log(travelData)
         mutate(travelData)
     }
+
+    if (error) openToast({ message: "Impossible d'obtenir les pass", type: "failed" })
 
     return createPortal(<motion.div
         ref={ref}

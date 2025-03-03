@@ -3,6 +3,8 @@ import Spinner from "../../components/UI/Spinner"
 import { disactivateFreeCode, getFreePassQrCode } from "../../utils/api/authAPIs"
 import { useLocation } from "react-router-dom"
 import Button from "../../components/UI/Button"
+import { useContext } from "react"
+import { ToastContext } from "../../hooks/useToast"
 
 export default function EGoPassCard() {
 
@@ -10,6 +12,7 @@ export default function EGoPassCard() {
     const passId = location.state?.id
     const isDeleteble = location.state?.token
     
+    const { openToast } = useContext(ToastContext)
     const queryClient = useQueryClient()
     const mutateKey = ['egoPasses']
     const queryKey = ['freePassQrCode']
@@ -29,13 +32,14 @@ export default function EGoPassCard() {
             })
             reset()
         },
-        onError: err => console.log(err)
+        onError: err => openToast({ message: err?.response?.data?.message, type: "failed" })
     })
 
     const handleDisactivate = () => {
         mutate(isDeleteble)
     }
 
+    if (error) openToast({ message: "Erreur d'obtention du pass", type: "failed" })
     if (isLoading) return <Spinner otherClass='m-auto' />
 
     if (pass) {

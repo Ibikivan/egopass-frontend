@@ -8,7 +8,7 @@ import Spinner from "../../components/UI/Spinner";
 import { useOnline } from "../../hooks/useOnline";
 import { useContext, useEffect } from "react";
 import { ProfilContext } from "../../hooks/useProfil";
-import Toast from "../../components/UI/Toast";
+import { ToastContext } from "../../hooks/useToast";
 
 export default function Root({ footerRef }) {
 
@@ -19,10 +19,11 @@ export default function Root({ footerRef }) {
     const navigate = useNavigate()
     const location = useLocation()
     const isLogged = location.state?.logged
+    const { openToast } = useContext(ToastContext)
 
     useEffect(() => {
         if (error && !isLogged) {
-            // Toast d'information
+            openToast({ message: "Erreur ou Session expirée", type: "failed" })
             navigate('/login')
         }
     }, [error])

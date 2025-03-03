@@ -2,13 +2,15 @@ import { useQuery } from "react-query"
 import Spinner from "../../components/UI/Spinner"
 import { getFreePassQrCode, getUserTravel } from "../../utils/api/authAPIs"
 import { useLocation } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import { ToastContext } from "../../hooks/useToast"
 
 export default function TravelDetails() {
 
     const [getCode, setGetCode] = useState(false)
     const location = useLocation()
     const travelId = location.state.id
+    const { openToast } = useContext(ToastContext)
     const queryKey = ['travel']
     const codeQueryKey = ['freePassQrCode']
     const { isLoading, data: travel, error } = useQuery(queryKey, async () => await getUserTravel(travelId))
@@ -22,6 +24,8 @@ export default function TravelDetails() {
         }
     }, [travel])
 
+    if (error) openToast({ message: "Erreur d'obtension du voyage", type: "failed" })
+    if (error) openToast({ message: "Erreur de QR-Code", type: "failed" })
     if (isLoading) return <Spinner otherClass='m-auto' />
 
     if (travel) {

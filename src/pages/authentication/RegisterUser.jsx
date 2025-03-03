@@ -10,7 +10,9 @@ import { registerAbonne, registerAdmin, registerAgent } from '../../utils/api/au
 import logo from './../../assets/eGo-Pass_logo.png';
 import eyeIcon from '../../assets/eye.svg';
 import eyeSlashedIcon from '../../assets/eye-slash.svg';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { ProfilContext } from '../../hooks/useProfil';
+import { ToastContext } from '../../hooks/useToast';
 
 export default function RegisterUser() {
     const pageConfig = {
@@ -28,18 +30,19 @@ export default function RegisterUser() {
     usePageTitle(pageConfig.title);
     const [isPwdVisible, setIsPwdVisible] = useState(false)
 
-    const currentUser = JSON.parse(sessionStorage.getItem('user'));
-    const userRole = currentUser?.role;
+    const { openToast } = useContext(ToastContext)
+    const { userProfile } = useContext(ProfilContext)
+    const userRole = userProfile?.user?.role
 
     const usedGetter = pageConfig.roles[userRole] ? pageConfig.roles[userRole].getter : registerAbonne
     const { isLoading, mutate: registerUser, reset } = useMutation(
-        async (userData) => await usedGetter(userData),
-        {
-        onSuccess: (user) => {
-            reset();
-            navigate('/login');
-        },
-        onError: (err) => console.log(err)
+        async (userData) => await usedGetter(userData), {
+            onSuccess: (user) => {
+                openToast({ message: "Compte créé" })
+                reset();
+                navigate('/login');
+            },
+            onError: (err) => openToast({ message: "Erreur de creation du compte", type: "failed" })
         }
     );
 

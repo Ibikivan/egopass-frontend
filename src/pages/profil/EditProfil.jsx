@@ -3,10 +3,11 @@ import { usePageTitle } from "../../hooks"
 import { getLogedUser, updateProfile } from "../../utils/api/authAPIs"
 import Spinner from "../../components/UI/Spinner"
 import { hostUriADapter } from "../../utils/helper"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import Button from "../../components/UI/Button"
 import { Link, useNavigate } from "react-router-dom"
 import defaultPicture from '../../assets/defaultPicture.svg'
+import { ToastContext } from "../../hooks/useToast"
 
 export default function EditProfil() {
 
@@ -25,6 +26,7 @@ export default function EditProfil() {
         }
     }
     usePageTitle(pageConfig.title)
+    const { openToast } = useContext(ToastContext)
     const navigate = useNavigate()
     const queryKey = ['user']
     const { isLoading, data: user, error } = useQuery(queryKey, async () => getLogedUser())
@@ -33,15 +35,14 @@ export default function EditProfil() {
 
     const {isLoading: updating, mutate, error: unUpdated, reset} = useMutation(async data => await updateProfile(data), {
         onSuccess: (user) => {
+            openToast({ message: "Profil mis à jour" })
             navigate('/profil')
             reset()
         },
-        onError: (err) => {
-            throw new Error(err)
-        }
+        onError: (err) => openToast({ message: "Echec de mise à jour", type: "failed" })
     })
 
-    // if (isLoading) return <Spinner otherClass='m-auto' />
+    if (error) openToast({ message: "Echec d'obtention du profil", type: "failed" })
     if (isLoading) return <div className="full_page_spinner"><Spinner otherClass='m-auto' /></div>
 
     const handleFileChange = (e) => {

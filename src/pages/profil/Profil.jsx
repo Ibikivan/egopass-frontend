@@ -5,6 +5,8 @@ import { hostUriADapter } from "../../utils/helper"
 import { Link } from "react-router-dom"
 import editIcon from "../../assets/pencil-square.svg"
 import defaultPicture from '../../assets/defaultPicture.svg'
+import { useContext } from "react"
+import { ToastContext } from "../../hooks/useToast"
 
 export default function Profil() {
 
@@ -23,10 +25,11 @@ export default function Profil() {
         }
     }
     usePageTitle(pageConfig.title)
+    const { openToast } = useContext(ToastContext)
     const queryKey = ['user']
     const { isLoading, data: user, error } = useQuery(queryKey, async () => getLogedUser())
 
-    // if (isLoading) return <Spinner otherClass='m-auto' />
+    if (error) openToast({ message: "Echec d'obtention du profil", type: "failed" })
     if (isLoading) return <div className="full_page_spinner"><Spinner otherClass='m-auto' /></div>
 
     if (user) {

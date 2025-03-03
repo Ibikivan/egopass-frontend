@@ -4,7 +4,6 @@ import AgentRVA from "../../components/agentRVA";
 import { getEgoPasses, getUserTravels } from "../../utils/api/authAPIs";
 import { Link } from "react-router-dom";
 import { ProfilContext } from "../../hooks/useProfil";
-import Toast from "../../components/UI/Toast";
 
 export default function Home({ footerRef }) {
 
@@ -27,8 +26,8 @@ export default function Home({ footerRef }) {
     const userRole = userProfile?.user?.role || "ABONNE"
     
     if (!pageConfig.roles[userRole]) {
-        return <div>
-            <h1>Vous n'avez pas accès à cette page</h1>
+        return <div className="container py-5">
+            <h1 className="secondary">Vous n'avez pas accès à cette page</h1>
 
             <div className="hstack justify-content-between">
                 <Link to={'/'}>Retour à l'accueille</Link>
@@ -38,8 +37,6 @@ export default function Home({ footerRef }) {
     }
 
     return <div className="container fullHeight vstack align-items-center">
-        
-
         {userRole === 'AGENT_RVA' && <AgentRVA
             queryKey={pageConfig.roles[userRole]?.key}
             getter={pageConfig.roles[userRole]?.getter}

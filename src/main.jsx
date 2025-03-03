@@ -16,7 +16,7 @@ createRoot(document.getElementById('root')).render(
       <ToastContextProvider>
         <QueryClientProvider client={queryClient}>
           <App />
-          <Toast message="Connexion réussie" />
+          <Toast message="Notif générique" />
         </QueryClientProvider>
       </ToastContextProvider>
     </ProfileContextProvider>
